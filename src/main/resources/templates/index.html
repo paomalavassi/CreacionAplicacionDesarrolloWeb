@@ -1,96 +1,16 @@
 <!DOCTYPE html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechShop</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh; /* altura mínima: toda la ventana */
-        }
-
-
-        /* Header */
-        header {
-            background-color: #1E3A8A; /* Azul oscuro */
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-        }
-
-        header h1 {
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        header nav a {
-            background-color: #3B82F6; /* Celeste */
-            color: white;
-            text-decoration: none;
-            padding: 5px 10px;
-            margin-left: 10px;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-
-        header nav a:hover {
-            background-color: #2563EB; /* Azul más fuerte al pasar el mouse */
-        }
-
-        /* Layout principal */
-        main {
-            display: flex;
-            flex: 1; 
-        }
-
-        aside {
-            width: 20%;
-            background-color: #F3F4F6; /* Gris claro */
-        }
-
-        section {
-            flex: 1;
-            background-color: #E5E7EB; /* Blanco humo */
-            padding: 20px;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #111827; /* Gris oscuro */
-            color: white;
-            text-align: center;
-            padding: 5px;
-            font-size: 12px;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>TechShop</h1>
-        <nav>
-            <a href="#">Mis Autos</a>
-            <a href="#">Multimedia</a>
-            <a href="#">iFrames</a>
-        </nav>
-    </header>
-
-    <main>
-        <aside></aside>
-        <section>
-            <p><strong>Esta es la tienda en línea del curso</strong></p>
-        </section>
-    </main>
-
-    <footer>
-        <p>Todos los Derechos Reservados. TechShop 2025 &copy;</p>
-    </footer>
-</body>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"      
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    
+    <head th:replace="~{general/fragmentos :: head}"/>
+    <body>
+            <header th:replace="~{general/fragmentos :: header}"/>
+        
+            <footer th:replace="~{general/fragmentos :: footer}"/>
+    </body>
 </html>
