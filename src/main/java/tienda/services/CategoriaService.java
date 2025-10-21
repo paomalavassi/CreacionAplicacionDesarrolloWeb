@@ -1,4 +1,5 @@
 package tienda.services;
+
 import tienda.domain.Categoria;
 import tienda.repository.CategoriaRepository;
 import java.io.IOException;
@@ -9,12 +10,13 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
- 
+
 @Service
-public class CategoriaServices {
- 
+public class CategoriaService {
+
     @Autowired
     private CategoriaRepository categoriaRepository;
+    
     @Transactional(readOnly=true)
     public List<Categoria> getCategorias(boolean activo) {
         if (activo) {
@@ -22,14 +24,15 @@ public class CategoriaServices {
         }
         return categoriaRepository.findAll();
     }
+    
     @Transactional(readOnly = true)
     public Optional<Categoria> getCategoria(Integer idCategoria) {
         return categoriaRepository.findById(idCategoria);
     }
- 
+
     @Autowired
     private FirebaseStorageService firebaseStorageService;
- 
+
     @Transactional
     public void save(Categoria categoria, MultipartFile imagenFile) {
         categoria = categoriaRepository.save(categoria);
@@ -41,11 +44,11 @@ public class CategoriaServices {
                 categoria.setRutaImagen(rutaImagen);
                 categoriaRepository.save(categoria);
             } catch (IOException e) {
- 
+
             }
         }
     }
- 
+
     @Transactional
     public void delete(Integer idCategoria) {
         // Verifica si la categoría existe antes de intentar eliminarlo
@@ -61,4 +64,3 @@ public class CategoriaServices {
         }
     }
 }
-

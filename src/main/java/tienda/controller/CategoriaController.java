@@ -1,6 +1,7 @@
 package tienda.controller;
+
 import tienda.domain.Categoria;
-import tienda.services.CategoriaServices;
+import tienda.services.CategoriaService;
 import jakarta.validation.Valid;
 import java.util.Locale;
 import java.util.Optional;
@@ -15,36 +16,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
- 
+
 @Controller
 @RequestMapping("/categoria")
 public class CategoriaController {
- 
+
     @Autowired
-    private CategoriaServices categoriaServices;
+    private CategoriaService categoriaService;
+    
     @GetMapping("/listado")
     public String listado(Model model) {
-        var categorias = categoriaServices.getCategorias(false);
+        var categorias = categoriaService.getCategorias(false);
         model.addAttribute("categorias", categorias);
         model.addAttribute("totalCategorias", categorias.size());
         return "/categoria/listado";
     }
+    
     @Autowired
     private MessageSource messageSource;
- 
+
     @PostMapping("/guardar")
     public String guardar(@Valid Categoria categoria,@RequestParam MultipartFile imagenFile, RedirectAttributes redirectAttributes) {
-        categoriaServices.save(categoria,imagenFile);        
+        
+        categoriaService.save(categoria,imagenFile);        
         redirectAttributes.addFlashAttribute("todoOk",messageSource.getMessage("mensaje.actualizado",null,Locale.getDefault()));
+        
         return "redirect:/categoria/listado";
     }
- 
+
     @PostMapping("/eliminar")
     public String eliminar(@RequestParam Integer idCategoria, RedirectAttributes redirectAttributes) {
         String titulo="todoOk";
         String detalle="mensaje.eliminado";
         try {
-          categoriaServices.delete(idCategoria);          
+          categoriaService.delete(idCategoria);          
         } catch (IllegalArgumentException e) {            
             titulo="error"; // Captura la excepción de argumento inválido para el mensaje de "no existe"
             detalle="cateogira.error01";
@@ -58,10 +63,10 @@ public class CategoriaController {
         redirectAttributes.addFlashAttribute(titulo,messageSource.getMessage(detalle, null, Locale.getDefault()));
         return "redirect:/categoria/listado";
     }
- 
+
     @GetMapping("/modificar/{idCategoria}")    
     public String modificar(@PathVariable("idCategoria") Integer idCategoria, Model model, RedirectAttributes redirectAttributes) {
-        Optional<Categoria> categoriaOpt = categoriaServices.getCategoria(idCategoria);
+        Optional<Categoria> categoriaOpt = categoriaService.getCategoria(idCategoria);
         if (categoriaOpt.isEmpty()) {
             redirectAttributes.addFlashAttribute("error", messageSource.getMessage("categoria.error01", null, Locale.getDefault()));
             return "redirect:/categoria/listado";
@@ -69,5 +74,5 @@ public class CategoriaController {
         model.addAttribute("categoria", categoriaOpt.get());
         return "/categoria/modifica";
     }
- 
+
 }
