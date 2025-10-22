@@ -1,5 +1,4 @@
 package tienda.controller;
-
 import tienda.domain.Categoria;
 import tienda.services.CategoriaService;
 import jakarta.validation.Valid;
