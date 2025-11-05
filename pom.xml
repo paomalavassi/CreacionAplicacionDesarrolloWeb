@@ -95,7 +95,6 @@
             <artifactId>hibernate-validator</artifactId>
             <scope>runtime</scope>
         </dependency>
-
     </dependencies>
 
     <build>
